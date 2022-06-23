@@ -35,9 +35,12 @@ int main()
     {
         cout << "not find" << endl;
     }
-
-    access_s access[3] = {};
-
+    const int quantityMap(3);           //кол-во структур в массиве
+    access_s access[quantityMap] = {};  //массив структур
+    access[0].id = "K";
+    access[1].id = "Z";
+    access[2].id = "B";
+    //access[0].pointer = (*external)["K"];
 
     return 0;
 }
