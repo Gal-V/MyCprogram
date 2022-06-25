@@ -4,6 +4,27 @@
 
 using namespace std;
 
+void fillMap(map<string, map<string, string>>* myMap)
+{
+    string key1("K");
+    string key2("Z");
+    string key3("B");
+    //auto it = *myMap.find(key);
+    //cout << it->first <<endl; //key
+    (*myMap)[key1]["YID"] = "K1";
+    (*myMap)[key1]["UAV"] = "K2";
+    (*myMap)[key1]["RDV"] = "K3";
+    //cout << (*myMap)[key1] << endl;
+    
+}
+
+void printMap(map<string, map<string, string>>* myMap)
+{
+    //auto it = *myMap.find("K");
+    //cout << it->first <<endl; //key
+    cout << (*myMap)["K"]["YID"] << endl;
+}
+
 struct access_s     //структура доступа
 {
     string id;
@@ -44,5 +65,8 @@ int main()
     access[0].pointer = &external["Z"];
     access[0].pointer = &external["B"];
 
+    fillMap(&external);
+    printMap(&external);
+    cout << "end" << endl;
     return 0;
 }
