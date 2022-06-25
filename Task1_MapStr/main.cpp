@@ -37,10 +37,12 @@ int main()
     }
     const int quantityMap(3);           //кол-во структур в массиве
     access_s access[quantityMap] = {};  //массив структур
-    access[0].id = "K";
+    access[0].id = "K";                 //индефикаторы
     access[1].id = "Z";
     access[2].id = "B";
-    //access[0].pointer = (*external)["K"];
+    access[0].pointer = &external["K"]; //адреса карт intern
+    access[0].pointer = &external["Z"];
+    access[0].pointer = &external["B"];
 
     return 0;
 }
