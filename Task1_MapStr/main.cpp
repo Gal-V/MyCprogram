@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string>
 #include <map>
-#include <array>
+//#include <array>
 
 using namespace std;
 
@@ -39,11 +39,21 @@ void fillMap(map<string, map<string, string>>* myMap, access_s* access)
     
 }
 
-void printMap(map<string, map<string, string>>* myMap, access_s* access)
+void printMap(map<string, map<string, string>> myMap)
 {
+    for(const auto& it : myMap)   //вывод external key 
+    {
+        cout << it.first  << " ";
+        cout << endl;
+        for(const auto& itt : myMap[it.first])   //вывод internal key contain
+        {
+            cout << itt.first <<  " " << itt.second <<  "\n";
+        }
+    }
     //auto it = *myMap.find("K");
     //cout << it->first <<endl; //key
     //cout << (*myMap)["K"]["YID"] << endl;
+    /*
     cout << (*access[0].pointer)[access[0].id] << "\t";
     cout << (*access[0].pointer)[access[1].id] << "\t";
     cout << (*access[0].pointer)[access[2].id] << endl;
@@ -53,6 +63,7 @@ void printMap(map<string, map<string, string>>* myMap, access_s* access)
     cout << (*access[2].pointer)[access[0].id] << "\t";
     cout << (*access[2].pointer)[access[1].id] << "\t";
     cout << (*access[2].pointer)[access[2].id] << endl;
+    */
     /*string key("K"); 
     auto it = external.find(key);
     if(it != external.end()) //проверка что эллемент существует
@@ -94,13 +105,7 @@ int main()
     access[2].pointer = &external["B"];
 
     fillMap(&external, access);         //заполнение карт &access[quantityMap]
-    printMap(&external, access);        //вывод результатов
-    /*                                  //неработающий
-    for(auto it = external.cbegin(); it != external.cend(); ++it)
-    {
-        std::cout << it->first << " " << it->second.first << " " << it->second.second << "\n";
-    }
-    */
-    //cout << "end" << endl;
+    printMap(external);                 //вывод результатов
+
     return 0;
 }
