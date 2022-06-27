@@ -1,28 +1,15 @@
 #include <iostream>
 #include <string>
 #include <map>
+#include <array>
 
 using namespace std;
-
-void fillMap(map<string, map<string, string>>* myMap)
-{
-    string key1("K");
-    string key2("Z");
-    string key3("B");
-    //auto it = *myMap.find(key);
-    //cout << it->first <<endl; //key
-    (*myMap)[key1]["YID"] = "K1";
-    (*myMap)[key1]["UAV"] = "K2";
-    (*myMap)[key1]["RDV"] = "K3";
-    //cout << (*myMap)[key1] << endl;
-    
-}
 
 void printMap(map<string, map<string, string>>* myMap)
 {
     //auto it = *myMap.find("K");
     //cout << it->first <<endl; //key
-    cout << (*myMap)["K"]["YID"] << endl;
+    cout << (*myMap)["K"]["UAV"] << endl;
 }
 
 struct access_s     //структура доступа
@@ -30,6 +17,25 @@ struct access_s     //структура доступа
     string id;
     map<string, string>* pointer;
 };
+
+void fillMap(map<string, map<string, string>>* myMap, access_s* access) 
+{
+    string key1(access[0].id);
+    string key2(access[1].id);
+    string key3(access[2].id);
+    
+    //access[0].id = "K2";
+    (*myMap)[key1]["YID"] = "K1";
+    (*myMap)[key1]["UAV"] = "K2";
+    (*myMap)[key1]["RDV"] = "K3";
+    (*myMap)[key2]["YID"] = "Z1";
+    (*myMap)[key2]["UAV"] = "Z2";
+    (*myMap)[key2]["RDV"] = "Z3";
+    (*myMap)[key3]["YID"] = "B1";
+    (*myMap)[key3]["UAV"] = "B2";
+    (*myMap)[key3]["RDV"] = "B3";
+    
+}
 
 int main()
 {
@@ -45,7 +51,7 @@ int main()
     external["B"]["UAV"];
     external["B"]["RDV"];
 
-    string key("K"); 
+    /*string key("K"); 
     auto it = external.find(key);
     if(it != external.end()) //проверка что эллемент существует
     {
@@ -55,17 +61,17 @@ int main()
     }else
     {
         cout << "not find" << endl;
-    }
+    }*/
     const int quantityMap(3);           //кол-во структур в массиве
     access_s access[quantityMap] = {};  //массив структур
     access[0].id = "K";                 //индефикаторы
     access[1].id = "Z";
     access[2].id = "B";
     access[0].pointer = &external["K"]; //адреса карт intern
-    access[0].pointer = &external["Z"];
-    access[0].pointer = &external["B"];
+    access[1].pointer = &external["Z"];
+    access[2].pointer = &external["B"];
 
-    fillMap(&external);
+    fillMap(&external, access);        // &access[quantityMap]
     printMap(&external);
     cout << "end" << endl;
     return 0;
