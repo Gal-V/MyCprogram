@@ -58,6 +58,7 @@ void fillMap(map<string, map<string, string>>* myMap, access_s* access)
     (*access[2].pointer)[access[0].id] = "B1";
     (*access[2].pointer)[access[1].id] = "B2";
     (*access[2].pointer)[access[2].id] = "B3";
+    //cout << (*access[2].pointer)[access[2].id];
     
 }
 
