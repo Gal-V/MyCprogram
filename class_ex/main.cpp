@@ -9,18 +9,18 @@ public:
     int month;
     int year;
 
-    Date(int day,int month,int year)
+    Date(int day = 11,int month = 11,int year = 2011)
     {
         this->day = day;
         this->month = month;
         this->year = year;
     }
-    Date()
+/*     Date()
     {
         day = 11;
         month = 11;
         year = 2011;
-    }
+    } */
 
     void print()
     {
