@@ -9,6 +9,19 @@ public:
     int month;
     int year;
 
+    Date(int day,int month,int year)
+    {
+        this->day = day;
+        this->month = month;
+        this->year = year;
+    }
+    Date()
+    {
+        day = 11;
+        month = 11;
+        year = 2011;
+    }
+
     void print()
     {
         std::cout << day << " " << month << " "
@@ -19,9 +32,11 @@ public:
 
 int main()
 {
-    Date today {2, 7, 2022};
+    Date today (2, 7, 2022);
     today.print();
     today.day++;
     today.print();
+    Date defdate;
+    defdate.print();
     return 0;
 }
