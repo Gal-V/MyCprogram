@@ -2,6 +2,7 @@
 #include <string>
 #include <cstdlib>//rand()
 #include <ctime> //time()
+#include <cstdio>//для гетчара
 
 using namespace std;
 
@@ -86,24 +87,34 @@ Monster::MonsterData Monster::monsterData[Monster::MAX_TYPES]//1099 1631
     { "slime", 's', 1, 1, 10 }
 };
 
-int main(int argc, char const *argv[])
+void createPlayer()
 {
-    srand(time(NULL));
-    //инициализация игрока
     string p_name("Player1");
     cout << "Enter your name: ";
     cin >> p_name;
     cout << endl;
     Player p(p_name);
     cout << "Welcome, " << p.getName() << endl;
-    cout <<"You have " << p.getHealth() << " health and " << p.getGold() << " gold" << endl;
-
-    //создание монстра
-
-    for(int i = 0; i < 10; i++)
-    {
+    cout <<"You have " << p.getHealth() << " health and " << p.getGold() << " gold" << endl << endl;
+}
+bool fightMonster() //fight-true run-false
+{
     Monster m(Monster::getRandomMonster());
-    cout << "A " << m.getName() << " (" << m.getSymbol()<< ") created"<<endl;
-    }
+    cout << "You have met a "<< m.getName() << " " << m.getSymbol() << endl;
+    cout << "Run(r) or Fight(f): ";
+    char input = '0'; 
+    do
+    {
+        input =  getchar(); 
+    } while ((input != 'f') && (input != 'r'));
+    return (input == 'f');
+}
+int main(int argc, char const *argv[])
+{
+    srand(time(NULL)); 
+    createPlayer();     //инициализация игрока
+    //создание монстра
+    cout << fightMonster() << endl;
+    cout << "end" <<endl;
     return 0;
 }
