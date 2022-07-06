@@ -1,5 +1,8 @@
 #include <iostream>
 #include <string>
+#include <cstdlib>//rand()
+#include <ctime> //time()
+
 using namespace std;
 
 class Creature
@@ -68,10 +71,16 @@ class Monster: public Creature          //монстры
         int gold;
     };
     static MonsterData monsterData[MAX_TYPES];//обьявление массива
+    static Type getRandomMonster()   //рандомное число от 1 до MAX_TYPES
+    {
+        int min = 0;            
+        int max = MAX_TYPES;
+        return static_cast<Type>(rand() % max);    //преобразуем в тип монстров
+    }
 };
 
 Monster::MonsterData Monster::monsterData[Monster::MAX_TYPES]//1099 1631
-{
+{   //данные о монстрах
     { "dragon", 'D', 20, 4, 100 },
     { "orc", 'o', 4, 2, 25 },
     { "slime", 's', 1, 1, 10 }
@@ -79,6 +88,7 @@ Monster::MonsterData Monster::monsterData[Monster::MAX_TYPES]//1099 1631
 
 int main(int argc, char const *argv[])
 {
+    srand(time(NULL));
     //инициализация игрока
     string p_name("Player1");
     cout << "Enter your name: ";
@@ -89,7 +99,11 @@ int main(int argc, char const *argv[])
     cout <<"You have " << p.getHealth() << " health and " << p.getGold() << " gold" << endl;
 
     //создание монстра
-    Monster m(Monster::ORC);
+
+    for(int i = 0; i < 10; i++)
+    {
+    Monster m(Monster::getRandomMonster());
     cout << "A " << m.getName() << " (" << m.getSymbol()<< ") created"<<endl;
+    }
     return 0;
 }
