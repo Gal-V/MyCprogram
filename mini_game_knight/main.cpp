@@ -80,15 +80,83 @@ class Monster: public Creature          //монстры
     }
 };
 
-Monster::MonsterData Monster::monsterData[Monster::MAX_TYPES]//1099 1631
+Monster::MonsterData Monster::monsterData[Monster::MAX_TYPES]//1101 1631
 {   //данные о монстрах
     { "dragon", 'D', 20, 4, 100 },
     { "orc", 'o', 4, 2, 25 },
     { "slime", 's', 1, 1, 10 }
 };
 
-void createPlayer()
+void playerAttackMonster(Player &p, Monster &m)
 {
+    m.reduceHealth(p.getDamage());
+    cout<< "You hit  "<< m.getName()<< " for " << m.getDamage()<< " damage" <<endl;
+    if (m.isDead())     //при убийстве монста
+    {
+        cout << "You killed  "<< m.getName()<<endl;
+        p.levelUp();    //лвл ап
+        cout<< "Your lvl is "<< p.getLevel()<<endl;
+        p.addGold(m.getGold()); //+голда
+        cout<< "You found "<< m.getGold()<< " gold and now u have "<< p.getGold()<< " gold"<<endl;
+    }
+    
+}
+
+void monsterAttackPlayer(Monster &m, Player &p)
+{
+    p.reduceHealth(m.getDamage());
+    cout<< m.getName() << "hit you for " << m.getDamage() <<endl;
+}
+
+void fightMonster(Player &p) 
+{
+    Monster m(Monster::getRandomMonster());
+    cout << "You have met a "<< m.getName() << " " << m.getSymbol() << endl;
+    cout << "Run(r) or Fight(f): ";
+    char input = '0'; 
+    int flag = 0;
+    do
+    {
+        if (flag > 2)
+        {
+            cout << "incorrect action, enter r or f" << endl;
+        }
+        input =  getchar(); 
+        flag++;
+    } while ((input != 'f') && (input != 'r'));
+
+    while (!m.isDead() && !p.isDead())  //пока никто не умер
+    {
+    
+        if (input == 'r')   //если выбран бег
+        {
+        bool escape_success = static_cast<bool>(rand() % 2);  //50/50 шанс убежать
+        if (escape_success)
+        {
+            cout << "You can escape"<< endl;
+            return;
+        }else{
+            cout<< "You failed escape"<<endl;
+            monsterAttackPlayer(m, p);
+            continue;
+        }
+        
+        }else{
+            playerAttackMonster(p, m);
+            if (!m.isDead())
+            {
+                monsterAttackPlayer(m, p);
+            }
+            
+        }
+    }
+}
+
+
+int main(int argc, char const *argv[])
+{
+    srand(time(NULL)); 
+    //инициализация игрока
     string p_name("Player1");
     cout << "Enter your name: ";
     cin >> p_name;
@@ -96,25 +164,24 @@ void createPlayer()
     Player p(p_name);
     cout << "Welcome, " << p.getName() << endl;
     cout <<"You have " << p.getHealth() << " health and " << p.getGold() << " gold" << endl << endl;
-}
-bool fightMonster() //fight-true run-false
-{
-    Monster m(Monster::getRandomMonster());
-    cout << "You have met a "<< m.getName() << " " << m.getSymbol() << endl;
-    cout << "Run(r) or Fight(f): ";
-    char input = '0'; 
-    do
+    //встреча с монстром
+    while (!p.isDead() && !p.hasWon())
     {
-        input =  getchar(); 
-    } while ((input != 'f') && (input != 'r'));
-    return (input == 'f');
-}
-int main(int argc, char const *argv[])
-{
-    srand(time(NULL)); 
-    createPlayer();     //инициализация игрока
-    //создание монстра
-    cout << fightMonster() << endl;
+        fightMonster(p);
+    }
+
+    if (p.isDead())
+    {
+        cout<<endl;
+        cout<<"You died with "<< p.getGold()<< " gold"<<endl;
+        cout<< "The dead don't need gold"<<endl;
+    }else{
+        cout<<endl;
+        cout<<"You are won and earn "<< p.getGold()<<" gold"<<endl;
+    }
+    
+
     cout << "end" <<endl;
     return 0;
 }
+
