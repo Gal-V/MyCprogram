@@ -46,11 +46,40 @@ class Player: public Creature           //игрок
 
     int getLevel(){return m_level;}
     void levelUp(){m_level++; m_damage++;}  //при левелапе +1 к дамагу
-    bool hasWon(){return (m_level == 20);}  //20 лвл = победа
+    bool hasWon(){return (m_level >= 20);}  //20 лвл = победа
+};
+
+class Monster: public Creature          //монстры
+{
+
+    public:
+    enum Type{DRAGON, ORC, SLIME, MAX_TYPES}; //типы монстров
+    Monster(Type type) : Creature(monsterData[type].name, monsterData[type].symbol,
+                                  monsterData[type].health, monsterData[type].damage,
+                                  monsterData[type].gold)
+    {}
+
+    struct MonsterData                  //структура данных о монстарах
+    {
+        string name;
+        char symbol;
+        int health;
+        int damage;
+        int gold;
+    };
+    static MonsterData monsterData[MAX_TYPES];//обьявление массива
+};
+
+Monster::MonsterData Monster::monsterData[Monster::MAX_TYPES]//1099 1631
+{
+    { "dragon", 'D', 20, 4, 100 },
+    { "orc", 'o', 4, 2, 25 },
+    { "slime", 's', 1, 1, 10 }
 };
 
 int main(int argc, char const *argv[])
 {
+    //инициализация игрока
     string p_name("Player1");
     cout << "Enter your name: ";
     cin >> p_name;
@@ -59,10 +88,8 @@ int main(int argc, char const *argv[])
     cout << "Welcome, " << p.getName() << endl;
     cout <<"You have " << p.getHealth() << " health and " << p.getGold() << " gold" << endl;
 
-    Creature o("orc", 'o', 4, 2, 10);
-    o.addGold(5);
-    o.reduceHealth(1);
-    cout << o.getName() << " has " << o.getHealth() << " health and " << o.getGold() << " gold" << endl;
-
+    //создание монстра
+    Monster m(Monster::ORC);
+    cout << "A " << m.getName() << " (" << m.getSymbol()<< ") created"<<endl;
     return 0;
 }
