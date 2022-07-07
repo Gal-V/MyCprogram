@@ -85,6 +85,8 @@ Monster::MonsterData Monster::monsterData[Monster::MAX_TYPES]//1101 1631
     { "dragon", 'D', 20, 4, 100 },//name symbol Hp Damage Gold
     { "orc", 'o', 4, 2, 25 },
     { "slime", 's', 1, 1, 10 }
+
+    
 };
 
 void playerAttackMonster(Player &p, Monster &m)
