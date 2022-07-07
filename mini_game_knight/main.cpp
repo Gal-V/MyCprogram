@@ -82,7 +82,7 @@ class Monster: public Creature          //монстры
 
 Monster::MonsterData Monster::monsterData[Monster::MAX_TYPES]//1101 1631
 {   //данные о монстрах
-    { "dragon", 'D', 20, 4, 100 },
+    { "dragon", 'D', 20, 4, 100 },//name symbol Hp Damage Gold
     { "orc", 'o', 4, 2, 25 },
     { "slime", 's', 1, 1, 10 }
 };
@@ -90,14 +90,17 @@ Monster::MonsterData Monster::monsterData[Monster::MAX_TYPES]//1101 1631
 void playerAttackMonster(Player &p, Monster &m)
 {
     m.reduceHealth(p.getDamage());
-    cout<< "You hit  "<< m.getName()<< " for " << m.getDamage()<< " damage" <<endl;
+    cout<< "You hit  "<< m.getName()<< " for " << p.getDamage()<< " damage" <<endl;
     if (m.isDead())     //при убийстве монста
     {
         cout << "You killed  "<< m.getName()<<endl;
         p.levelUp();    //лвл ап
-        cout<< "Your lvl is "<< p.getLevel()<<endl;
+        cout<< "lvl "<< p.getLevel()<< " \tdamage "<< p.getDamage() <<endl;
         p.addGold(m.getGold()); //+голда
-        cout<< "You found "<< m.getGold()<< " gold and now u have "<< p.getGold()<< " gold"<<endl;
+        cout<< "+ "<< m.getGold()<< " gold \t u have "<< p.getGold()<< " gold"<<endl;
+        cout<<"hp "<<p.getHealth()<<endl;
+
+        cout<<endl;
     }
     
 }
@@ -105,28 +108,30 @@ void playerAttackMonster(Player &p, Monster &m)
 void monsterAttackPlayer(Monster &m, Player &p)
 {
     p.reduceHealth(m.getDamage());
-    cout<< m.getName() << "hit you for " << m.getDamage() <<endl;
+    cout<< m.getName() << "hit you for " << m.getDamage()<< " damage" <<endl;
+    cout<<endl;
 }
 
 void fightMonster(Player &p) 
 {
-    Monster m(Monster::getRandomMonster());
-    cout << "You have met a "<< m.getName() << " " << m.getSymbol() << endl;
-    cout << "Run(r) or Fight(f): ";
     char input = '0'; 
     int flag = 0;
-    do
-    {
-        if (flag > 2)
-        {
-            cout << "incorrect action, enter r or f" << endl;
-        }
-        input =  getchar(); 
-        flag++;
-    } while ((input != 'f') && (input != 'r'));
-
+    Monster m(Monster::getRandomMonster());
+    cout << "You have met a "<< m.getName() << " " << m.getSymbol() << endl;
     while (!m.isDead() && !p.isDead())  //пока никто не умер
     {
+        cout << "Run(r) or Fight(f): ";
+        do
+        {
+            if (flag > 2)
+            {
+                cout << "incorrect action, enter r or f " << endl;
+            }
+            input =  getchar(); 
+            flag++;
+        } while ((input != 'f') && (input != 'r'));
+        flag = 0;
+        cout<<endl;
     
         if (input == 'r')   //если выбран бег
         {
@@ -147,7 +152,7 @@ void fightMonster(Player &p)
             {
                 monsterAttackPlayer(m, p);
             }
-            
+            //cout<<endl;
         }
     }
 }
