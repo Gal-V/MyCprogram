@@ -38,6 +38,15 @@ class Creature
     {
         m_gold += gold_value;
     }
+
+    void printHealth()
+    {
+        for (int i = 0; i < m_health; i++)
+        {
+            cout<<"♥";
+        }
+        cout<<endl;
+    }
 };
 
 class Player: public Creature           //игрок
@@ -86,7 +95,6 @@ Monster::MonsterData Monster::monsterData[Monster::MAX_TYPES]//1101 1631
     { "orc", 'o', 4, 2, 25 },
     { "slime", 's', 1, 1, 10 }
 
-    
 };
 
 void playerAttackMonster(Player &p, Monster &m)
@@ -101,7 +109,6 @@ void playerAttackMonster(Player &p, Monster &m)
         p.addGold(m.getGold()); //+голда
         cout<< "+ "<< m.getGold()<< " gold \t u have "<< p.getGold()<< " gold"<<endl;
         cout<<"hp "<<p.getHealth()<<endl;
-
         cout<<endl;
     }
     
@@ -110,7 +117,7 @@ void playerAttackMonster(Player &p, Monster &m)
 void monsterAttackPlayer(Monster &m, Player &p)
 {
     p.reduceHealth(m.getDamage());
-    cout<< m.getName() << "hit you for " << m.getDamage()<< " damage" <<endl;
+    cout<< m.getName() << " hit you for " << m.getDamage()<< " damage" <<endl;
     cout<<endl;
 }
 
@@ -145,7 +152,7 @@ void fightMonster(Player &p)
         }else{
             cout<< "You failed escape"<<endl;
             monsterAttackPlayer(m, p);
-            continue;
+            //continue;
         }
         
         }else{
@@ -156,6 +163,10 @@ void fightMonster(Player &p)
             }
             //cout<<endl;
         }
+            cout<< "your hp:   ";
+            p.printHealth();
+            cout<< m.getName() << " hp: ";
+            m.printHealth();
     }
 }
 
@@ -180,15 +191,13 @@ int main(int argc, char const *argv[])
     if (p.isDead())
     {
         cout<<endl;
-        cout<<"You died with "<< p.getGold()<< " gold"<<endl;
+        cout<<"You DIED with "<< p.getGold()<< " gold"<<endl;
         cout<< "The dead don't need gold"<<endl;
     }else{
         cout<<endl;
         cout<<"You are won and earn "<< p.getGold()<<" gold"<<endl;
     }
     
-
-    cout << "end" <<endl;
     return 0;
 }
 
