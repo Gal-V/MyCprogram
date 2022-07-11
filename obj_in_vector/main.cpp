@@ -46,6 +46,9 @@ int main()
     
     cout << "We have "<< userslist.size()<< " users" << endl;   //в конце вывод количества пользователей в векторе
                                                                 //с отладчика хорошо видно как всё лежит
+
+    for (vector<Users>::iterator it = userslist.begin() ; it!=userslist.end() ; ++it)
+        it->printUser();
     
     return 0;
 }
