@@ -13,7 +13,7 @@ struct access_s     //структура доступа
 //заполнение карты значениями 
 void fillMap(map<string, map<string, string>>* myMap, access_s* access);
 //вывод на экран карты
-void printMap(map<string, map<string, string>> myMap);
+void printMap(map<string, map<string, string>> &myMap);
 
 
 int main()
@@ -62,7 +62,7 @@ void fillMap(map<string, map<string, string>>* myMap, access_s* access)
     
 }
 
-void printMap(map<string, map<string, string>> myMap)
+void printMap(map<string, map<string, string>> &myMap)
 {
     for(const auto& it : myMap)                  //вывод external key 
     {
