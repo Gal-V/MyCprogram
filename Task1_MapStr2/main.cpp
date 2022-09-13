@@ -71,11 +71,11 @@ int main()
 
 void fillMap(map<string, map<string, string>>* myMap, access_s* access, array<string, 78> fill) 
 {   
-    for (int i = 0; i < symbols; i++)
+    for (int i = 0, a = 0; i < symbols; i++)
     {
-        for (int j = 0; j < 3; j++)
+        for (int j = 0; j < 3; j++, a++)
         {
-            (*access[i].pointer)[access[j].id] = fill[i];
+            (*access[i].pointer)[access[j].id] = fill[a];
         }
         
     }
