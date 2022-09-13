@@ -1,7 +1,6 @@
 #include <iostream>
 #include <string>
 #include <map>
-#include <vector>
 
 using namespace std;
 const int symbols = 26;
@@ -20,12 +19,12 @@ void printMap(map<string, map<string, string>> &myMap);
 
 int main()
 {
-    int test;
+    // int test;
                                                 //ключи external map
     array<string, 26> alfabit = {"A","B","C","D","E","F","G","H",
                                 "I","J","K","L","M","N","O","P",
                                 "Q","R","S","T","U","V","W","X","Y","Z"};
-    array<string, 78> alfabit_with_num;         //значения second internal map
+    array<string, 78> alfabit_with_num;         //значения second internal map (добавляем цифры к алфавиту)
     for (int i = 0, j = 0, a = 1; i < 78; i++, a++)
     {
         alfabit_with_num[i] = alfabit[j] + to_string(a);
@@ -70,7 +69,7 @@ int main()
 
 
 void fillMap(map<string, map<string, string>>* myMap, access_s* access, array<string, 78> fill) 
-{   
+{
     for (int i = 0, a = 0; i < symbols; i++)
     {
         for (int j = 0; j < 3; j++, a++)
