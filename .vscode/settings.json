@@ -46,6 +46,8 @@
         "typeinfo": "cpp",
         "bitset": "cpp",
         "cstring": "cpp",
-        "map": "cpp"
+        "map": "cpp",
+        "ctime": "cpp",
+        "fstream": "cpp"
     }
 }
