@@ -1,0 +1,26 @@
+SHOW DATABASES;
+
+CREATE DATABASE dbtask;
+CREATE TABLE signs(
+    ID VARCHAR(6) PRIMARY KEY,
+    TM BIGINT UNSIGNED DEFAULT 167676786876,
+    VAL INT UNSIGNED
+);
+
+DROP PROCEDURE IF EXISTS sp_fill_dbtask;
+DELIMITER $$
+CREATE PROCEDURE sp_fill_dbtask()
+BEGIN
+    DECLARE i INT;
+    DECLARE signid VARCHAR(6);
+    SET i = 0;
+    WHILE i < 100 DO
+        SET signid = CONCAT('YT', i);
+        INSERT INTO signs VALUES (signid, 167676786876, 1+i*10);
+        SET i = i + 1;
+    END WHILE;
+END$$
+DELIMITER ;
+
+CALL sp_fill_dbtask;
+SELECT * FROM signs;
